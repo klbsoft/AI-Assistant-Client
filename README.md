@@ -1,3 +1,5 @@
+<img width="1458" height="941" alt="image" src="https://github.com/user-attachments/assets/4fb5a719-3138-4fd6-813b-2560b3b6a015" />
+
 # AI Assistant Client
 
 A high-performance, chat-based AI assistant application built with a modern tech stack. This project focuses on delivering a seamless conversational AI experience for general-purpose use—ranging from casual conversation to knowledge queries, creative writing, and more.
