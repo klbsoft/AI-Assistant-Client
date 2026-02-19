@@ -1,0 +1,1277 @@
+/*
+================================================================================
+CSS STRUCTURE DOCUMENTATION
+================================================================================
+
+This CSS file is organized into the following sections:
+
+1. GLOBAL RESET & BASE STYLES
+   - Reset styles, box-sizing, body, and main container
+
+2. LAYOUT COMPONENTS
+   - Navbar, sidebar, main content areas, and chat layout
+
+3. CHAT INPUT COMPONENTS
+   - Input field, buttons, and voice/attachment buttons
+
+4. MESSAGES STYLING
+   - General message styles, user vs assistant styling
+   - Voice message specific styles and animations
+
+5. VOICE RECORDER STYLING
+   - Recording states, wave animations, and button states
+
+6. FILE MESSAGES STYLING (NEW SECTION)
+   - File message containers, file icons, and file info display
+
+7. FIXED TOP-LEFT BUTTON (NEW SECTION)
+   - This button allows the toggle of the languague form SP to EN 
+
+8. SETTINGS STYLES (NEW SECTION)
+   - As the name implied this contains the style for the new settings section
+
+================================================================================*/
+
+/* global.css - Minimal styling only */
+
+/* ============================================================================
+   1. GLOBAL RESET & BASE STYLES
+=============================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  background: #f0f0f0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Main layout container */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* ============================================================================
+   2. LAYOUT COMPONENTS
+=============================================================================== */
+
+/* Navbar */
+.navbar {
+  background: #202123;
+  color: white;
+  height: 60px;
+  display: none ; /*flex;*/ /*temporally hidden*/
+  align-items: center;
+  padding: 0 20px;
+  flex-shrink: 0;
+}
+
+/* Main content area */
+.main-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sidebar */
+.sidebar {
+  display:none; /*Temporatlly hidden*/
+  background: #f7f7f8;
+  width: 260px;
+  border-right: 1px solid #e5e5e5;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+/* Chatbox area */
+.chatbox-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: white;
+}
+
+/* Chat messages area */
+.chatbox {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+    margin-bottom: 0px;
+    padding-bottom: 0px;
+
+}
+
+/* Chat input area */
+.chat-input {
+  padding: 20px;
+  border-top: 1px solid #e5e5e5;
+  background: white;
+}
+
+/* ============================================================================
+   3. CHAT INPUT COMPONENTS
+=============================================================================== */
+
+/* Simple input styling */
+input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #106da2;
+}
+
+/* Simple button */
+button {
+  background: #106da2;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #106ca260;
+}
+
+/* Chatbox picture */
+.chatbox-picture {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /*margin-top: 0px;*/
+  /*padding: 40px 20px 20px;*/
+  padding-top: 20px;
+  text-align: center;
+  margin-bottom: 0px;
+  
+}
+
+.chatbox-picture img {
+  width: 200px;
+  height: 200px;  
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #4a90e2;
+}
+
+.picture-title {
+  margin-top: 15px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #202123;
+}
+
+.picture-subtitle {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #6b6b7b;
+}
+
+/* ChatInput.css */
+.chat-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+  background: white;
+  border-top: 1px solid #e5e5e5;
+}
+
+/* Common button styles */
+.attachment-button,
+.voice-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #f7f7f8;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  color: #202123;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-height: 44px;
+}
+
+.attachment-button:hover,
+.voice-button:hover {
+  background: #f0f0f0;
+  border-color: #d0d0d0;
+}
+
+/* Button icons */
+.attachment-icon,
+.voice-icon {
+  width: 18px;
+  height: 18px;
+  color: #6b6b7b;
+}
+
+.button-text {
+  font-weight: 500;
+}
+
+/* Text input area */
+.text-input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.chat-input-field {
+  width: 100%;
+  padding: 12px 50px 12px 16px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 16px;
+  background: white;
+  min-height: 44px;
+}
+
+.chat-input-field:focus {
+  outline: none;
+  border-color: #357ae8;
+}
+
+/* ChatInput.css */
+.send-button {
+  background-color: #357ae8;
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  border-radius: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.send-icon {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  fill: white ; /* Directly set fill color here */
+  color: white ; /* For currentColor fallback */
+  transform: rotate(-90deg);
+}
+
+/* ============================================================================
+   4. MESSAGES STYLING
+=============================================================================== */
+
+/* Existing CSS remains the same */
+.chat-messages {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  max-height: 500px;
+  overflow-y: auto;
+  line-height: 1.6;
+  margin-bottom: 0px;
+}
+
+/* Individual message styling */
+.message {
+  margin-bottom: 24px;
+  padding: 16px;
+  border-radius: 12px;
+  max-width: 85%;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* User messages - right side */
+.message.user {
+  background: #f0f0f0;
+  margin-left: auto;
+  margin-right: 0;
+  border-bottom-right-radius: 4px;
+}
+
+/* Assistant messages - left side */
+.message.assistant {
+  background: #a0a0a0;
+  margin-right: auto;
+  margin-left: 0;
+  border-bottom-left-radius: 4px;
+  border-left: 3px solid #888;
+}
+
+/* Message header (owner name) */
+.message strong {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+/* Message content */
+.message span {
+  display: block;
+  font-size: 1rem;
+  color: #222;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* Paragraph-like styling for message content */
+.message span {
+  line-height: 1.7;
+  text-align: justify;
+  hyphens: auto;
+}
+
+/* Typing indicator for assistant 
+.message.assistant.typing span {
+  color: #666;
+  font-style: italic;
+}
+*/
+
+
+
+/* assitent typeing animation start*/
+
+/* Typing indicator animation */
+.message.assistant.typing span {
+  color: #666;
+  font-style: italic;
+}
+
+
+/* Typing animation dots */
+.typing-dots {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.typing-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #666;
+  margin: 0 2px;
+  opacity: 0.4;
+}
+
+.typing-dot:nth-child(1) {
+  animation: typingDot 1.4s infinite;
+}
+
+.typing-dot:nth-child(2) {
+  animation: typingDot 1.4s infinite 0.2s;
+}
+
+.typing-dot:nth-child(3) {
+  animation: typingDot 1.4s infinite 0.4s;
+}
+
+@keyframes typingDot {
+  0%, 60%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+/* Fade in animation for new messages */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* assitent typeing animation ends*/
+
+
+
+
+
+
+
+
+
+
+
+/* Voice message specific styles */
+.message.voice {
+  padding: 12px 16px;
+  min-width: 200px;
+}
+
+.message.voice.user {
+  background: linear-gradient(135deg, #f0f0f0, #e8f4f8);
+}
+
+.message.voice.assistant {
+  background: linear-gradient(135deg, #a0a0a0, #a8b4c8);
+}
+
+/* Voice message container */
+.voice-message-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+}
+
+/* Play/Pause button */
+.voice-play-button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #4a90e2;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.voice-play-button:hover {
+  background: #357ae8;
+  transform: scale(1.05);
+}
+
+.voice-play-button.playing {
+  background: #e74c3c;
+}
+
+.voice-play-button.playing:hover {
+  background: #c0392b;
+}
+
+/* Voice message info */
+.voice-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.voice-duration {
+  font-size: 0.75rem;
+  color: #666;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* Audio wave visualization */
+.audio-wave {
+  display: flex;
+  align-items: flex-end;
+  height: 40px;
+  gap: 2px;
+  margin-top: 8px;
+  padding: 0 4px;
+}
+
+.wave-bar {
+  width: 3px;
+  background: linear-gradient(to top, #4a90e2, #357ae8);
+  border-radius: 2px;
+  min-height: 2px;
+  transition: height 0.3s ease;
+}
+
+.message.assistant .wave-bar {
+  background: linear-gradient(to top, #888, #666);
+}
+
+/* Animated wave for playing state */
+.message.voice.playing .wave-bar {
+  animation: waveMove 1.2s ease-in-out infinite;
+}
+
+/* Different animation delays for each bar to create wave effect */
+.message.voice.playing .wave-bar:nth-child(1) { animation-delay: 0.1s; }
+.message.voice.playing .wave-bar:nth-child(2) { animation-delay: 0.2s; }
+.message.voice.playing .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+.message.voice.playing .wave-bar:nth-child(4) { animation-delay: 0.4s; }
+.message.voice.playing .wave-bar:nth-child(5) { animation-delay: 0.5s; }
+.message.voice.playing .wave-bar:nth-child(6) { animation-delay: 0.6s; }
+.message.voice.playing .wave-bar:nth-child(7) { animation-delay: 0.7s; }
+.message.voice.playing .wave-bar:nth-child(8) { animation-delay: 0.8s; }
+.message.voice.playing .wave-bar:nth-child(9) { animation-delay: 0.9s; }
+.message.voice.playing .wave-bar:nth-child(10) { animation-delay: 1.0s; }
+
+/* Wave animation */
+@keyframes waveMove {
+  0%, 100% {
+    height: var(--base-height, 20px);
+  }
+  50% {
+    height: calc(var(--base-height, 20px) * 1.5);
+  }
+}
+
+/* Voice message timestamp */
+.voice-timestamp {
+  font-size: 0.7rem;
+  color: #888;
+  text-align: right;
+  margin-top: 4px;
+}
+
+/* Existing hover effects */
+.message:hover {
+  transform: translateY(-1px);
+  transition: transform 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Existing scrollbar styling */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #aaa;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+/* Existing fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Existing responsive adjustments */
+@media (max-width: 768px) {
+  .message {
+    max-width: 90%;
+    padding: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .message span {
+    font-size: 0.95rem;
+  }
+  
+  .voice-message-container {
+    gap: 8px;
+  }
+  
+  .voice-play-button {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .audio-wave {
+    height: 32px;
+    gap: 1px;
+  }
+  
+  .wave-bar {
+    width: 2px;
+  }
+}
+
+/* ============================================================================
+   5. VOICE RECORDER STYLING
+=============================================================================== */
+
+.voice-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.voice-button:hover {
+  background: #e0e0e0;
+}
+
+.voice-button.recording {
+  background: #ffebee;
+  color: #d32f2f;
+  animation: pulse 1.5s infinite;
+}
+
+.voice-button.recording .voice-icon {
+  fill: #d32f2f;
+}
+
+.voice-icon {
+  width: 24px;
+  height: 24px;
+  transition: fill 0.3s ease;
+}
+
+/* Wave animation */
+.wave-animation {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 20px;
+}
+
+/* Recording wave bars */
+.wave-bar-recording {
+  width: 4px;
+  background: #d32f2f;
+  border-radius: 2px;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+/* Different heights for recording bars */
+.wave-bar-recording:nth-child(1) {
+  height: 8px;
+  animation-delay: 0s;
+}
+
+.wave-bar-recording:nth-child(2) {
+  height: 16px;
+  animation-delay: 0.2s;
+}
+
+.wave-bar-recording:nth-child(3) {
+  height: 10px;
+  animation-delay: 0.4s;
+}
+
+/* Regular (non-recording) wave bars */
+.wave-bar-regular {
+  width: 4px;
+  background: #4a90e2;
+  border-radius: 2px;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+.wave-bar-regular:nth-child(1) {
+  height: 8px;
+  animation-delay: 0s;
+}
+
+.wave-bar-regular:nth-child(2) {
+  height: 16px;
+  animation-delay: 0.2s;
+}
+
+.wave-bar-regular:nth-child(3) {
+  height: 10px;
+  animation-delay: 0.4s;
+}
+
+.wave-bar {
+  width: 4px;
+  background: #4a90e2;
+  border-radius: 2px;
+  animation: wave 1.2s ease-in-out infinite;
+}
+
+.wave-bar:nth-child(1) {
+  height: 8px;
+  animation-delay: 0s;
+}
+
+.wave-bar:nth-child(2) {
+  height: 16px;
+  animation-delay: 0.2s;
+}
+
+.wave-bar:nth-child(3) {
+  height: 10px;
+  animation-delay: 0.4s;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(211, 47, 47, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(211, 47, 47, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(211, 47, 47, 0);
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    transform: scaleY(0.5);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+.button-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ============================================================================
+   6. FILE MESSAGES STYLING (NEW SECTION)
+=============================================================================== */
+
+/* File message specific styling */
+/* Messages with files */
+.message.with-files {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.attached-files-container {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.files-header {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.1);*/
+}
+
+/* Files grid layout */
+.files-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.file-attachment {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 6px;
+  border: 1px solid #cccccc;
+  /* border: 1px solid #e5e5e5;*/
+  transition: all 0.2s ease;
+}
+
+.file-attachment:hover {
+  border-color: #4a90e2;
+  box-shadow: 0 2px 8px rgba(74, 144, 226, 0.1);
+}
+
+/* FIXED: File icon container with proper centering */
+.attached-files-container .file-icon-container {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.attached-files-container .file-icon {
+  width: 20px;
+  height: 20px;
+  display: block; /* Ensures SVG is treated as block element */
+}
+
+/* Adjust file info for inline layout */
+.attached-files-container .file-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.attached-files-container .file-name {
+  font-size: 0.8rem;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.attached-files-container .file-details {
+  font-size: 0.7rem;
+  gap: 6px;
+  display: flex;
+  align-items: center;
+}
+
+/* FIXED: Download button with proper centering */
+.attached-files-container .file-download-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: #4a90e2;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  padding: 0; /* Remove any default padding */
+}
+
+.attached-files-container .file-download-button:hover {
+  background: #357ae8;
+  transform: scale(1.05);
+}
+
+/* FIXED: Download icon centering */
+.attached-files-container .download-icon {
+  width: 16px;
+  height: 16px;
+  display: block; /* Important for SVG centering */
+  margin: 0; /* Remove any margins */
+}
+
+/* If using inline SVG, make sure it's centered */
+.attached-files-container .download-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .files-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .file-attachment {
+    padding: 8px;
+  }
+}
+
+
+/* ============================================================================
+   7. FIXED TOP-LEFT BUTTON (NEW SECTION)
+=============================================================================== */
+
+/* Fixed position button for top-left corner */
+.fixed-top-left-button {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+  
+  /* Button styling matching existing blue colors */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #357ae8; /* Primary blue from send button */
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  white-space: nowrap;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  
+  /* Subtle shadow for depth */
+  box-shadow: 0 2px 8px rgba(53, 122, 232, 0.2);
+}
+
+/* Alternative color variations */
+.fixed-top-left-button.dark {
+  background: #106da2; /* Darker blue from simple button */
+}
+
+.fixed-top-left-button.medium {
+  background: #4a90e2; /* Medium blue from voice play button */
+}
+
+/* Hover states - different variations */
+.fixed-top-left-button:hover {
+  background: #2a6bd4; /* Slightly darker hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(53, 122, 232, 0.3);
+}
+
+.fixed-top-left-button.dark:hover {
+  background: #0d5a8a; /* Darker hover for dark variant */
+  box-shadow: 0 4px 12px rgba(16, 109, 162, 0.3);
+}
+
+.fixed-top-left-button.medium:hover {
+  background: #3a80d8; /* Darker hover for medium variant */
+  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+}
+
+/* Active state */
+.fixed-top-left-button:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(53, 122, 232, 0.2);
+}
+
+/* Button icon */
+.fixed-top-left-button .button-icon {
+  width: 18px;
+  height: 18px;
+  fill: white;
+  flex-shrink: 0;
+}
+
+/* For icon-only version */
+.fixed-top-left-button.icon-only {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%; /* Circular for icon-only */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fixed-top-left-button {
+    top: 15px;
+    left: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+    min-height: 40px;
+  }
+  
+  .fixed-top-left-button.icon-only {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .fixed-top-left-button .button-icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Optional: Add animation for button entrance */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fixed-top-left-button {
+  animation: slideInFromLeft 0.3s ease-out;
+}
+
+
+/* ============================================================================
+   8. SETTINGS STYLES (NEW SECTION)
+=============================================================================== */
+
+/* Theme variables for light/dark modes */
+:root {
+  --primary-color: #357ae8;
+  --primary-dark: #2a6bd4;
+  --background: #ffffff;
+  --surface: #f7f7f8;
+  --text-primary: #202123;
+  --text-secondary: #6b6b7b;
+  --border-color: #e5e5e5;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+  --primary-color: #4a90e2;
+  --primary-dark: #357ae8;
+  --background: #202123;
+  --surface: #2d2d2f;
+  --text-primary: #ffffff;
+  --text-secondary: #a0a0a0;
+  --border-color: #404144;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Settings panel styles */
+.settings-panel {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 500px;
+  margin: 20px auto;
+  box-shadow: var(--shadow);
+  color: var(--text-primary);
+}
+
+.settings-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 32px;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 12px;
+}
+
+.settings-section {
+  margin-bottom: 32px;
+}
+
+.settings-section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--primary-color);
+}
+
+.setting-item {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.setting-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+/* Theme options */
+.setting-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.theme-option,
+.time-format-option {
+  padding: 8px 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.theme-option:hover,
+.time-format-option:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-1px);
+}
+
+.theme-option.active,
+.time-format-option.active {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.theme-toggle-button {
+  padding: 8px 16px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-button:hover {
+  background: var(--primary-dark);
+  transform: translateY(-1px);
+}
+
+/* Select dropdown */
+.setting-select {
+  padding: 10px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--text-primary);
+  font-size: 14px;
+  width: 100%;
+  max-width: 300px;
+  cursor: pointer;
+}
+
+.setting-select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(53, 122, 232, 0.1);
+}
+
+/* Toggle switches */
+.toggle-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  cursor: pointer;
+}
+
+.toggle-text {
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+.toggle-input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.toggle-input:checked + .toggle-slider {
+  background-color: var(--primary-color);
+}
+
+.toggle-input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+
+/* Reset button */
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+.reset-button {
+  padding: 10px 20px;
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.reset-button:hover {
+  background: #ff5252;
+  transform: translateY(-1px);
+}
+
+/* Responsive settings */
+@media (max-width: 768px) {
+  .settings-panel {
+    padding: 16px;
+    margin: 10px;
+    border-radius: 8px;
+  }
+  
+  .settings-title {
+    font-size: 20px;
+  }
+  
+  .setting-options {
+    flex-direction: column;
+  }
+  
+  .theme-option,
+  .time-format-option,
+  .theme-toggle-button {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .setting-select {
+    max-width: 100%;
+  }
+}

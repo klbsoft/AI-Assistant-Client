@@ -1,0 +1,199 @@
+Today is: 02/12/2026
+--------------------
+
+So lets use some ai to build the plan for today
+let's list the fetures that are still not implemented
+and lets. 
+
+1. Frontend
+    a) Connect functionality with backend 
+    b) Adjust UI according with backend responses 
+
+2. Backend
+    a) DataStorage
+        1. Database
+            1. The database has to be simple , lightweight 
+        2. File Storage
+            1. It has to be able to assosiate the files with
+            the actual user also must be encrypted some disent
+            encryption system using their password for safety 
+    b) api
+        > There has to be an api that will be the one handling all 
+        the end points from the Assitent , it has to ssuport the fallowing
+        list of methods and functionalities. 
+
+        1. POST 
+            1. It has to support multiple files 
+            2. It has to support messages 
+            3. It has to support audio
+            4. It has to support Authentication of user 
+        2. GET
+            1. It hast to support return all user data 
+        
+
+AI PROMPT
+=========
+---
+
+## **PHASE 1: BACKEND FOUNDATION** ✅
+
+### Step 1.1 – Database Setup
+- [X] Choose a simple, lightweight database (SQLite, PostgreSQL, or MongoDB)
+        > SQLite 
+- [X] Design User schema (id, username, email, password hash, etc.)
+- [X] Design Data schema (messages, files metadata, timestamps, user associations)
+   
+            
+        database {
+                users: user[];
+                sessions: session[];
+                chats: chat[];
+                messages: message[];
+                files: file[];
+            }
+
+        user {
+            id: INTEGER PRIMARY KEY;
+            username: TEXT UNIQUE;
+            email: TEXT UNIQUE;
+            password_hash: TEXT;
+            salt: TEXT;                    
+            created_at: DATETIME;
+            updated_at: DATETIME;
+        }
+
+        session {
+            id: INTEGER PRIMARY KEY;
+            user_id: INTEGER;             
+            token: TEXT UNIQUE;           
+            expires_at: DATETIME;
+            created_at: DATETIME;
+        }
+
+        chat {
+            id: INTEGER PRIMARY KEY;
+            chat_id: TEXT UNIQUE;          
+            user_id: INTEGER;           
+            title: TEXT;                  
+            created_at: DATETIME;
+            updated_at: DATETIME;       
+        }
+
+        message {
+            id: INTEGER PRIMARY KEY;
+            message_id: TEXT UNIQUE;     
+            chat_id: INTEGER;           
+            user_id: INTEGER;           
+            content_type: TEXT | BLOB;         
+            content: TEXT;        
+            role: TEXT;              
+            status: TEXT;             // 'sent', 'delivered', 'read', 'error'
+            created_at: DATETIME;
+        }
+
+        file {
+            id: INTEGER PRIMARY KEY;
+            file_id: TEXT UNIQUE;       // Public UUID
+            user_id: INTEGER;          
+            chat_id: INTEGER;         
+            message_id: INTEGER;    
+            name: TEXT;    // ENCRYPTED 
+
+            storage_path: TEXT;       // Where it lives on disk
+            mime_type: TEXT;         // image/jpeg, audio/mp3, etc
+            size_bytes: INTEGER;
+            
+            encryption_iv: TEXT;     // Initialization vector
+            encryption_algo: TEXT;   // 'AES-256-GCM'
+            
+            hash_sha256: TEXT;       // For dedup + integrity
+            
+            uploaded_at: DATETIME;
+        }
+         
+- [ ] Set up database connection and basic CRUD operations
+
+### Step 1.2 – File Storage System
+- [ ] Decide on local vs cloud storage (local for simplicity, or S3/Backblaze if needed)
+- [ ] Implement file upload to storage
+- [ ] Implement file retrieval
+- [ ] Associate files with user IDs in database
+
+### Step 1.3 – Encryption System
+- [ ] Choose encryption method (AES-256 recommended)
+- [ ] Derive encryption key from user password (Argon2id or PBKDF2)
+- [ ] Encrypt files on upload
+- [ ] Decrypt files on retrieval
+- [ ] Store encryption metadata securely
+
+---
+
+## **PHASE 2: API DEVELOPMENT** 🔧
+
+### Step 2.1 – API Skeleton
+- [ ] Set up API framework (Express/FastAPI/Flask/etc.)
+- [ ] Define route structure (e.g., `/api/v1/...`)
+- [ ] Implement error handling and logging
+
+### Step 2.2 – POST Endpoints
+- [ ] `/api/auth/login` – User authentication
+- [ ] `/api/upload/files` – Support multiple file uploads
+- [ ] `/api/messages` – Handle message submissions
+- [ ] `/api/upload/audio` – Handle audio file uploads
+- [ ] Add request validation for all POST routes
+
+### Step 2.3 – GET Endpoints
+- [ ] `/api/user/data` – Return all user data
+- [ ] Pagination/filtering support if needed
+- [ ] Secure endpoints with authentication middleware
+
+---
+
+## **PHASE 3: FRONTEND SETUP** 🎨
+
+### Step 3.1 – Basic Frontend Structure
+- [ ] Set up frontend framework (React/Vue/Svelte or plain HTML/JS)
+- [ ] Create login/register pages
+- [ ] Create main dashboard layout
+
+### Step 3.2 – Connect to Backend
+- [ ] Implement API service layer (fetch/axios)
+- [ ] Store JWT/session tokens after login
+- [ ] Attach auth headers to all requests
+
+### Step 3.3 – File Upload UI
+- [ ] Multi-file upload component
+- [ ] Audio recording/upload component
+- [ ] Progress indicators
+- [ ] Error handling UI
+
+### Step 3.4 – Data Display
+- [ ] Fetch user data from GET endpoint
+- [ ] Display messages
+- [ ] Display files with download/decrypt functionality
+
+---
+
+## **PHASE 4: POLISH & TESTING** 🧪
+
+### Step 4.1 – End-to-End Testing
+- [ ] Test login flow
+- [ ] Test file upload (single + multiple)
+- [ ] Test audio upload
+- [ ] Test data retrieval
+- [ ] Test encryption/decryption
+
+### Step 4.2 – UI Adjustments
+- [ ] Match UI with backend responses
+- [ ] Loading states
+- [ ] Error toasts/notifications
+- [ ] Responsive design tweaks
+
+### Step 4.3 – Deployment Prep
+- [ ] Environment variables setup
+- [ ] Build frontend for production
+- [ ] Deploy backend
+- [ ] Deploy frontend
+
+---
+=========

@@ -1,0 +1,13 @@
+> Front end checklist
+	[ ] has a valid post url 
+	[ ] has a valid endpoint 
+> Backend checklist
+	[X] has a valid login endpoint 
+	[X] has a valid configuration 
+	[X] is redirecting correcly 	
+	
+	
+chain of defense:
+	1. Apache 2: El Fuego [X]
+	2. Proxy: La Puerta 	[X]
+	3. Proxied Site: El Hogar [X ]

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",       // All .js files go here
+    "rootDir": "./src",  
+    // Add these two lines:
+    "verbatimModuleSyntax": false,
+    "isolatedModules": false,
+    
+    // Keep your existing options, for example:
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    // ... other existing options
+  },
+   "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "custom.d.ts"  // Add this
+, "src/types", "src/utils/string/fixLongName.js", "src/utils/string/formatFileSize.js", "src/utils/encryption/encryptor.js", "src/utils/encryption/fileEncryptor.js", "src/utils/hash/hash-types.js", "src/utils/audio/PlayAudio.js", "src/components/UI/generateWeveBars.js", "src/components/UI/ArrowSvg.js", "src/utils/string/getFileIconClass.js", "src/utils/api/handleDownload.js", "src/utils/api/postMessages.js"  ]
+  // ... rest of config
+}
