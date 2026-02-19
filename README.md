@@ -65,7 +65,7 @@ cargo build
 ```bash
 npm run dev
 ```
-
+---
 ## 🎨 Features in Detail
 
 ### Chat Interface
