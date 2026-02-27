@@ -8,3 +8,27 @@ axum = "0.7"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
 serde = { version = "1", features = ["derive"] }
 rusqlite = "0.31"
+
+
+chrono = { version = "0.4", features = ["serde"] }
+
+
+
+ 
+aes-gcm = "0.10"          # AES-256-GCM
+chacha20poly1305 = "0.10" # ChaCha20-Poly1305
+rand = "0.8"              # Random number generation
+base64 = "0.21"           # Base64 encoding
+sha2 = "0.10"             # SHA-256, SHA-512
+sha3 = "0.10"             # SHA3-256
+hmac = "0.12"             # HMAC
+blake3 = "1.5"            # BLAKE3 hashing
+argon2 = "0.5"            # Argon2 (for password hashing/key derivation)
+anyhow = "1.0"            # Error handling
+hex = "0.4"               # Hex encoding
+
+[dev-dependencies]
+tempfile = "3.8"          # Temporary files for testing
+
+#sqlx = { version = "0.7", features = ["runtime-tokio", "sqlite", "derive"] }
+#sqlx = { version = "0.7", features = ["runtime-tokio", "sqlite", "macros"] }
