@@ -1,5 +1,9 @@
-/*
-#[derive(Debug, Serialize, Deserialize, sqlx::FromRow)]
+use chrono::NaiveDateTime;
+use serde::{Deserialize, Serialize};
+
+
+#[derive(Debug, Serialize, Deserialize)]
+
 pub struct File {
     pub id: i64,
     pub file_id: String,
@@ -15,4 +19,3 @@ pub struct File {
     pub hash_sha256: Option<String>,
     pub uploaded_at: NaiveDateTime,
 }
-*/

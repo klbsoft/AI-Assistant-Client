@@ -1,12 +1,9 @@
 mod identity;
-use crate::identity::users::User;
-
+mod components;
 
 use chrono::NaiveDateTime;
-
 use rusqlite::{Connection, Result};
 use serde::{Deserialize, Serialize};
-
 
 
 use axum::{
@@ -15,6 +12,8 @@ use axum::{
     Json,
     response::IntoResponse,
 };
+use crate::identity::users::User;
+use crate::components::dbfactory::Sqlitedb;
 
 
 async fn create_user(Json(payload): Json<User>) -> Json<User> {
@@ -31,6 +30,9 @@ async fn create_user(Json(payload): Json<User>) -> Json<User> {
 }
 
 fn test_end_point() -> String{
+
+    let db = Sqlitedb::new("test.db","scheme.sql");
+     db.debug_dump();
     return "Working...".to_string();
 }
  
@@ -38,6 +40,7 @@ fn test_end_point() -> String{
 
 #[tokio::main]
 async fn main() {
+
     let app = Router::new()
         .route("/", get(test_end_point()))
         .route("/login", post(create_user))

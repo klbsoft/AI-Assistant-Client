@@ -1,37 +1,67 @@
- 
-use rusqlite::{Connection, Result};
+use std::fs;
+use rusqlite::{Connection,Result,params,Row};
+use crate::identity::users::User;
+use crate::identity::chats::Chat;
+use crate::identity::sessions::Session;
+use crate::identity::files::File;
+
 
 
 #[derive(Debug)]
-pub struct Sqlitedb{
+pub struct Sqlitedb {
     conn: Connection,
 }
 
 impl Sqlitedb {
-    pub fn new(db_path: &str,schema: &str) -> Result<Self> {
-        let conn = Connection::open(db_path)?;
-        let schema_content = fs::read_to_string(schema);
-        conn.execute(schema_content,[],)?;
-        return Ok(Self { conn })
+    pub fn new(db_path: &str, schema: &str) -> Self {
+        let conn = Connection::open(db_path).unwrap();
+
+        let schema_content = fs::read_to_string(schema).unwrap();
+
+        conn.execute_batch(&schema_content).unwrap();
+        return Self { conn }  
     }
 }
-
-
 
 impl Sqlitedb{
-    pub fn user_exists(&self, username: &str, email: &str) -> Result<bool> {
-    let mut stmt = self.conn.prepare(
-        "SELECT COUNT(*) FROM users WHERE username = ?1 OR email = ?1"
-    )?;
-    
-    let count: i64 = stmt.query_row(params![username, email], |row| row.get(0))?;
-    
-    Ok(count > 0)
+
+pub fn debug_dump(&self) -> Result<()> {
+    let tables = ["users", "sessions", "chats", "messages", "files"];
+
+    for table in tables {
+        println!("\n===== TABLE: {} =====", table);
+
+        let query = format!("SELECT * FROM {}", table);
+        let mut stmt = self.conn.prepare(&query)?;
+
+        let column_count = stmt.column_count();
+
+        let rows = stmt.query_map([], |row| {
+            for i in 0..column_count {
+                let value: Result<String, _> = row.get(i);
+                match value {
+                    Ok(v) => print!("{} | ", v),
+                    Err(_) => print!("NULL | "),
+                }
+            }
+            println!();
+            Ok(())
+        })?;
+
+        for _ in rows {} // just iterate to execute
     }
+
+    Ok(())
+}
 }
 
 
-impl SqliteDb {
+
+
+
+
+
+impl Sqlitedb {
     // =========================
     // USERS CRUD
     // =========================
@@ -40,12 +70,12 @@ impl SqliteDb {
         let mut stmt = self.conn.prepare(
             "SELECT COUNT(*) FROM users WHERE username = ?1 OR email = ?2"
         )?;
-        
-        let count: i64 = stmt.query_row(params![username, email], |row| row.get(0))?;
-        
+      let count: i64 = stmt.query_row(params![username, email], |row: &rusqlite::Row| {
+            row.get(0)  // This returns Result<i64, rusqlite::Error>
+        })?;  // Outer ? converts to your function's error type
         Ok(count > 0)
     }
-
+/* 
     pub fn create_user(&self, user: &User) -> Result<i64> {
         self.conn.execute(
             "INSERT INTO users (username, email, password_hash, salt, created_at, updated_at) 
@@ -198,11 +228,12 @@ impl SqliteDb {
         
         Ok(users)
     }
+    */
 
     // =========================
     // SESSIONS CRUD
     // =========================
-
+/* 
     pub fn session_exists(&self, token: &str) -> Result<bool> {
         let mut stmt = self.conn.prepare(
             "SELECT COUNT(*) FROM sessions WHERE token = ?1"
@@ -391,11 +422,12 @@ impl SqliteDb {
         
         Ok(rows_affected)
     }
+    */
 
     // =========================
     // MESSAGES CRUD
     // =========================
-
+/* 
     pub fn message_exists(&self, message_id: &str) -> Result<bool> {
         let mut stmt = self.conn.prepare(
             "SELECT COUNT(*) FROM messages WHERE message_id = ?1"
@@ -524,11 +556,11 @@ impl SqliteDb {
         
         Ok(rows_affected)
     }
-
+*/
     // =========================
     // FILES CRUD
     // =========================
-
+/* 
     pub fn file_exists(&self, file_id: &str) -> Result<bool> {
         let mut stmt = self.conn.prepare(
             "SELECT COUNT(*) FROM files WHERE file_id = ?1"
@@ -658,7 +690,10 @@ impl SqliteDb {
         
         Ok(files)
     }
+    */
 
+
+/* 
     pub fn get_files_by_message_id(&self, message_id: i64) -> Result<Vec<File>> {
         let mut stmt = self.conn.prepare(
             "SELECT 
@@ -689,7 +724,8 @@ impl SqliteDb {
         
         Ok(files)
     }
-
+    */
+    /*
     pub fn update_file_message(&self, file_id: &str, message_id: Option<i64>) -> Result<usize> {
         let rows_affected = self.conn.execute(
             "UPDATE files SET message_id = ?1 WHERE file_id = ?2",
@@ -698,7 +734,8 @@ impl SqliteDb {
         
         Ok(rows_affected)
     }
-
+    */
+    /* 
     pub fn delete_file(&self, file_id: &str) -> Result<usize> {
         let rows_affected = self.conn.execute(
             "DELETE FROM files WHERE file_id = ?1",
@@ -706,8 +743,8 @@ impl SqliteDb {
         )?;
         
         Ok(rows_affected)
-    }
-
+    }*/
+    /* 
     pub fn delete_files_by_user_id(&self, user_id: i64) -> Result<usize> {
         let rows_affected = self.conn.execute(
             "DELETE FROM files WHERE user_id = ?1",
@@ -715,5 +752,5 @@ impl SqliteDb {
         )?;
         
         Ok(rows_affected)
-    }
+    }*/
 }

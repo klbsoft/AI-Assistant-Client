@@ -1,9 +1,9 @@
 use chrono::NaiveDateTime;
+use serde::{Deserialize, Serialize};
 
-/* 
 
 
-#[derive(Debug, Serialize, Deserialize, sqlx::FromRow)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Chat {
     pub id: i64,
     pub chat_id: String,
@@ -13,6 +13,3 @@ pub struct Chat {
     pub updated_at: NaiveDateTime,
 }
 
-*/
-
- 

@@ -1058,6 +1058,7 @@ dependencies = [
  "rand",
  "rusqlite",
  "serde",
+ "serde_json",
  "sha2",
  "sha3",
  "tempfile",
